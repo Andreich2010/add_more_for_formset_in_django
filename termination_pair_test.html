@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{#{% load helpers %}#}
+{#{% load form_helpers %}#}
+
+{% block content %}
+    <form action="" method="post" enctype="multipart/form-data" class="form form-horizontal">
+        {% csrf_token %}
+        {{ form.management_form }}
+        <input type="hidden" name="return_url" value="{{ request.return_url }}">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Коммутация</strong></div>
+                    <table class="table panel-body">
+                        <thead>
+                        <tr>
+                                <th></th>
+                                <th></th>
+                                <th>Rack</th>
+                                <th>Pair a:	</th>
+                                <th>Pair b: </th>
+                                <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for form in form %}
+                        <tr>
+
+                                {% for field in form.hidden_fields %}
+                                    <td>{{ field }}</td>
+                                {% endfor %}
+                                    <td>{{ form.rack }}</td>
+                                    <td>{{ form.pair_a }}</td>
+                                    <td>{{ form.pair_b }}</td>
+
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                        </table>
+{#                        <table class="table panel-body">#}
+{#                        <thead>#}
+{#                            {% for form in form %}#}
+{#                                {% if forloop.first %}#}
+{#                                    {% for field in form %}#}
+{#                                        <th>{{ field.label_tag }}</th>#}
+{#                                    {% endfor %}#}
+{#                                {% endif %}#}
+{#                        </thead>#}
+{#                        <tbody>#}
+{#                                <tr>#}
+{#                                    {% for field in form %}#}
+{#                                        <td>{{ field }}</td>#}
+{#                                    {% endfor %}#}
+{#                                </tr>#}
+{#                            {% endfor %}#}
+{#                        </tbody>#}
+{#                        </table>#}
+{#                    <div class="panel-body">#}
+{#                        {{ form.as_table }}#}
+{#                        {% for field in form %}#}
+{#                            <div class="col-md-9">#}
+{#                            <tr>#}
+{#                             {% for field in form.hidden_fields %}#}
+{#                                 {{ field }}#}
+{#                             {% endfor %}#}
+{#                                <td>{{ field.rack }}</td>#}
+{#                                <td>{{ field.pair_a }}</td>#}
+{#                                <td>{{ field.pair_b }}</td>#}
+{#                            </tr>#}
+{#                        {% endfor %}#}
+{#                        </div>#}
+                    <button id="add-another">add another</button>
+                    <input type="submit" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-right">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                {#                    <a href="{{ return_url }}" type="submit" class="btn btn-primary">Сохранить</a>#}
+                <a href="{{ return_url }}" class="btn btn-default">Cancel</a>
+                <input type="button" value="Add More" id="add_more">
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascript %}
+  <script src="{% static 'js/clone_rows.js' %}"></script>
+
+{% endblock %}
